@@ -5,6 +5,7 @@ namespace helloapi.Services
 {
     public interface IGreeterService
     {
-        IGreeter GetGreeter();
+        Greeting GetGreeting();
+        Greeting GetGreeting(string name);
     }
 }

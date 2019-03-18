@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using helloapi.Models;
+using helloapi.Services;
 
 namespace helloapi.Controllers
 {
@@ -11,24 +12,24 @@ namespace helloapi.Controllers
     [ApiController]
     public class GreetingsController : ControllerBase
     {
-        private readonly IGreeter _greeter;
-        public GreetingsController(IGreeter greeter)
+        private readonly IGreeterService _service;
+        public GreetingsController(IGreeterService service)
         {
-            _greeter = greeter;
+            _service = service;
         }
 
         // GET api/greetings
         [HttpGet]
-        public ActionResult<IEnumerable<string>> Get()
+        public ActionResult<Greeting> Get()
         {
-            return new string[] { "value1", "value2" };
+            return Ok(_service.GetGreeting());
         }
 
         // GET api/greetings/5
         [HttpGet("{name}")]
-        public ActionResult<string> Get(int id)
+        public ActionResult<Greeting> Get(string name)
         {
-            return "value";
+            return Ok(_service.GetGreeting(name));
         }
     }
 }

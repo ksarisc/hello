@@ -1,13 +1,16 @@
 # hello
 Hello, World! (API)
 
-asp.net core WebAPI with associated console application
+asp.net core WebAPI with associated console application and tests (xUnit)
 
 #**API**
-##boundary - /api/greeting/
+##boundary - /api/greeting/{name}
 
 ##service - **IGreeterService**
-set this up currently, but singleton pattern may not be necessary
-especially when using database in the future
+Currently using singleton pattern but that will probably switch to scope
+or transient in future especially if using database.
 
-##interface - **IGreeter**
+##result - **Greeting**
+######Message - property
+contains greeting message
+######Name    - property

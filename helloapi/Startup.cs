@@ -10,7 +10,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using helloapi.Models;
+using helloapi.Services;
 
 namespace helloapi
 {
@@ -23,23 +23,24 @@ namespace helloapi
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddTransient<IGreeter, Greeter>();
+            // if shared accross entire app
+            services.AddSingleton<IGreeterService>(new GreeterService());
+            // if type changes per controller
+            //services.AddTransient<IGreeter, Greeter>();
+            // if type is rarely shared
+            //services.AddScoped<IGreeter, Greeter>();
             services.AddMvc()
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-            }
-            else
-            {
+            } else {
                 app.UseHsts();
             }
 
